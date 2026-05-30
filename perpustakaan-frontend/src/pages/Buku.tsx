@@ -12,13 +12,16 @@ export default function Buku() {
   }, []);
 
   const loadBooks = async () => {
+
     try {
 
       const response = await api.get("/api/buku");
 
       console.log(response.data);
 
-      setBooks(response.data.data || []);
+      setBooks(
+        response.data.data.records
+      );
 
     } catch (error) {
 
@@ -36,15 +39,11 @@ export default function Buku() {
 
       <Sidebar />
 
-      <div className="flex-1 p-4 md:p-6 lg:p-8">
+      <div className="flex-1 p-8">
 
-        <div className="flex justify-between items-center mb-6">
-
-          <h1 className="text-3xl font-bold">
-            Data Buku
-          </h1>
-
-        </div>
+        <h1 className="text-4xl font-bold mb-6">
+          Data Buku
+        </h1>
 
         {loading ? (
 
@@ -54,29 +53,32 @@ export default function Buku() {
 
         ) : (
 
-          <div className="bg-white rounded-xl shadow overflow-hidden">
+          <div className="bg-white rounded-2xl shadow overflow-hidden">
 
             <table className="w-full">
 
               <thead className="bg-slate-900 text-white">
 
                 <tr>
+
                   <th className="p-4">ISBN</th>
-                  <th>Judul</th>
+                  <th>Judul Buku</th>
+                  <th>Kategori</th>
+                  <th>Penulis</th>
                   <th>Tahun</th>
                   <th>Stok</th>
-                  <th>Rak</th>
+
                 </tr>
 
               </thead>
 
               <tbody>
 
-                {books.map((book: any) => (
+                {books.map((book) => (
 
                   <tr
-                    key={book.id}
-                    className="border-b"
+                    key={book.id_buku}
+                    className="border-b hover:bg-slate-50"
                   >
 
                     <td className="p-4">
@@ -88,15 +90,19 @@ export default function Buku() {
                     </td>
 
                     <td>
+                      {book.kategori_buku?.jenis_buku}
+                    </td>
+
+                    <td>
+                      {book.penulis_buku?.penulis}
+                    </td>
+
+                    <td>
                       {book.tahun_terbit}
                     </td>
 
                     <td>
                       {book.stok_buku}
-                    </td>
-
-                    <td>
-                      {book.rak_buku}
                     </td>
 
                   </tr>
