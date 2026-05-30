@@ -4,20 +4,22 @@ import api from "../services/api";
 
 export default function DashboardSiswa() {
 
-  const [totalBuku, setTotalBuku] = useState(0);
+  const [jumlahBuku, setJumlahBuku] = useState(0);
 
   useEffect(() => {
-    loadData();
+    loadDashboard();
   }, []);
 
-  const loadData = async () => {
+  const loadDashboard = async () => {
 
     try {
 
       const response = await api.get("/api/buku");
 
-      setTotalBuku(
-        response.data.data.total_record
+      console.log(response.data);
+
+      setJumlahBuku(
+        response.data.data.records.length
       );
 
     } catch (error) {
@@ -32,64 +34,47 @@ export default function DashboardSiswa() {
 
       <SidebarSiswa />
 
-      <div className="flex-1 p-4 md:p-8">
+      <div className="flex-1 p-8">
 
-        <div className="mb-8">
+        <h1 className="text-5xl font-bold mb-2">
+          Dashboard Siswa
+        </h1>
 
-          <h1 className="text-4xl font-bold">
-            Dashboard Siswa
-          </h1>
+        <p className="text-gray-500 mb-8">
+          Selamat datang di Portal Perpustakaan
+        </p>
 
-          <p className="text-gray-500 mt-2">
-            Selamat datang di Portal Perpustakaan
-          </p>
-
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6">
 
           <div className="bg-green-600 text-white p-6 rounded-2xl shadow">
 
-            <p>Buku Tersedia</p>
+            <h3>Buku Tersedia</h3>
 
-            <h2 className="text-5xl font-bold mt-3">
-              {totalBuku}
-            </h2>
+            <h1 className="text-5xl font-bold mt-4">
+              {jumlahBuku}
+            </h1>
 
           </div>
 
           <div className="bg-blue-600 text-white p-6 rounded-2xl shadow">
 
-            <p>Sedang Dipinjam</p>
+            <h3>Sedang Dipinjam</h3>
 
-            <h2 className="text-5xl font-bold mt-3">
+            <h1 className="text-5xl font-bold mt-4">
               0
-            </h2>
+            </h1>
 
           </div>
 
           <div className="bg-red-600 text-white p-6 rounded-2xl shadow">
 
-            <p>Denda</p>
+            <h3>Denda</h3>
 
-            <h2 className="text-5xl font-bold mt-3">
+            <h1 className="text-5xl font-bold mt-4">
               Rp 0
-            </h2>
+            </h1>
 
           </div>
-
-        </div>
-
-        <div className="mt-8 bg-white p-6 rounded-2xl shadow">
-
-          <h2 className="text-2xl font-bold mb-4">
-            Informasi
-          </h2>
-
-          <p className="text-gray-600">
-            Gunakan menu Katalog Buku untuk melihat seluruh koleksi
-            buku yang tersedia di perpustakaan.
-          </p>
 
         </div>
 

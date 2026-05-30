@@ -6,10 +6,36 @@ export default function Sidebar() {
 
   const [open, setOpen] = useState(false);
 
+  const [darkMode, setDarkMode] = useState(
+  localStorage.getItem("theme") === "dark"
+);
+
+const toggleTheme = () => {
+
+  const newTheme = !darkMode;
+
+  setDarkMode(newTheme);
+
+  localStorage.setItem(
+    "theme",
+    newTheme ? "dark" : "light"
+  );
+
+  if (newTheme) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+};
+
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
+
+  localStorage.removeItem("token");
+  localStorage.removeItem("refresh_token");
+  localStorage.removeItem("role");
+
+  navigate("/");
+};
 
   return (
     <>
@@ -85,6 +111,23 @@ export default function Sidebar() {
         </div>
 
         <div className="p-4 border-t border-slate-700">
+
+          <button
+    onClick={toggleTheme}
+    className="
+    w-full
+    bg-yellow-500
+    hover:bg-yellow-600
+    text-white
+    p-4
+    rounded-xl
+    mb-3
+    "
+  >
+    {darkMode
+      ? "☀️ Light Mode"
+      : "🌙 Dark Mode"}
+  </button>
 
           <button
             onClick={handleLogout}

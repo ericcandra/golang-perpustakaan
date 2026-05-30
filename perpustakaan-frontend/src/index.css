@@ -5,3 +5,30 @@ body{
   background:#f1f5f9;
   font-family:Arial, Helvetica, sans-serif;
 }
+
+.dark {
+  background-color: #0f172a;
+}
+
+.dark body {
+  background-color: #0f172a;
+  color: white;
+}
+
+.dark .bg-white {
+  background-color: #1e293b !important;
+}
+
+.dark .text-gray-500 {
+  color: #cbd5e1 !important;
+}
+
+.dark table {
+  color: white;
+}
+
+.dark input {
+  background-color: #334155;
+  color: white;
+  border: 1px solid #475569;
+}

@@ -1,15 +1,40 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function SidebarSiswa() {
 
   const navigate = useNavigate();
 
+  const [darkMode, setDarkMode] = useState(
+  localStorage.getItem("theme") === "dark"
+);
+
+const toggleTheme = () => {
+
+  const newTheme = !darkMode;
+
+  setDarkMode(newTheme);
+
+  localStorage.setItem(
+    "theme",
+    newTheme ? "dark" : "light"
+  );
+
+  if (newTheme) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+};
+
   const logout = () => {
 
-    localStorage.clear();
+  localStorage.removeItem("token");
+  localStorage.removeItem("refresh_token");
+  localStorage.removeItem("role");
 
-    navigate("/");
-  };
+  navigate("/");
+};
 
   return (
     <div className="w-72 bg-green-700 text-white min-h-screen flex flex-col">
@@ -62,6 +87,23 @@ export default function SidebarSiswa() {
 
       {/* Logout selalu di bawah */}
       <div className="p-4 border-t border-green-500">
+
+        <button
+  onClick={toggleTheme}
+  className="
+  w-full
+  bg-yellow-500
+  hover:bg-yellow-600
+  text-white
+  p-4
+  rounded-xl
+  mb-3
+  "
+>
+  {darkMode
+    ? "☀️ Light Mode"
+    : "🌙 Dark Mode"}
+</button>
 
         <button
           onClick={logout}
